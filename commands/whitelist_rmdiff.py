@@ -9,9 +9,10 @@ class WhitelistRemoveDiff(commands.Cog):
 
     @nextcord.slash_command(name="whitelist_rmdiff", description="Command to remove difficulties of a certain beatmap from the whitelist. (Limited to users with an specific role.)")
     async def _whitelist_add(self, interaction: nextcord.Interaction, diffid:str):
+        ## Checking if role exists and user has role
         role_id = config.wl_roleid
         role = interaction.guild.get_role(role_id)
-        
+
         if role is None:
             await interaction.response.send_message("The specified role does not exist in this server.", ephemeral=True)
             return
@@ -19,9 +20,11 @@ class WhitelistRemoveDiff(commands.Cog):
         if role not in interaction.user.roles:
             await interaction.response.send_message("You do not have the required role to use this command.", ephemeral=True)
             return
-        
+        ## Defers the response to give us some time to make api calls and being able to send messages.
         await interaction.response.defer()
+        
         async with aiohttp.ClientSession() as session:
+            ## Calls the private server API
             api_url = f'http://{config.domain}/api/wl_remove?key={config.wl_key}&bid={diffid}'
             async with session.get(api_url) as response:
                 if response.status == 200:

@@ -12,14 +12,13 @@ class Profile(commands.Cog):
         if not uid.isdigit(): 
             await interaction.response.send_message("Please provide a valid numeric user ID.") 
             return
-        import nextcord
+        ## Calling API for user info
         async with aiohttp.ClientSession() as session:
-            # Example API URL (replace with your actual API URL)
             api_url = f'http://{config.domain}/api/get_user?id={uid}'
             async with session.get(api_url) as response:
                 if response.status == 200:
                     data = await response.json()
-
+                    ## Parsing the data
                     user_name = data.get('name', 'N/A')
                     stats = data.get('stats', 'N/A')
                     rank = stats.get('rank', 'N/A')

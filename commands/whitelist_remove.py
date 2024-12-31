@@ -39,7 +39,6 @@ class WhitelistRemove(commands.Cog):
                             else:
                                 collected_data.append({'id': id, 'error': 'Failed to fetch details'})
 
-                    # Create an embed with the collected data
                     await interaction.followup.send("Done.")
                 else:
                     await interaction.response.send_message("Failed to fetch IDs from the first API.")
