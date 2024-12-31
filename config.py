@@ -16,8 +16,8 @@ wl_key = getenv("WL_KEY", "")
 ## Your discord server role id for whitelist moderation
 wl_roleid = getenv("WL_ROLE", "")
 
-## Your private server domain (or ip)
-domain = "example.com"
+## Your private server domain (or ip) (with http or https)
+domain = "https://example.com"
 
 ## Your discord server guild id
 guild_id = 1234567890

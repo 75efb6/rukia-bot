@@ -32,7 +32,7 @@ class WhitelistRemove(commands.Cog):
                     # Collect data from the second API for each ID
                     collected_data = []
                     for beatmap_id in beatmap_ids:
-                        second_api_url = f'http://{config.domain}/api/wl_remove?key={config.wl_key}&bid={beatmap_id}'
+                        second_api_url = f'{config.domain}/api/wl_remove?key={config.wl_key}&bid={beatmap_id}'
                         async with session.get(second_api_url) as second_response:
                             if second_response.status == 200:
                                 pass

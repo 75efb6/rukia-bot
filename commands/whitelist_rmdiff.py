@@ -25,7 +25,7 @@ class WhitelistRemoveDiff(commands.Cog):
         
         async with aiohttp.ClientSession() as session:
             ## Calls the private server API
-            api_url = f'http://{config.domain}/api/wl_remove?key={config.wl_key}&bid={diffid}'
+            api_url = f'{config.domain}/api/wl_remove?key={config.wl_key}&bid={diffid}'
             async with session.get(api_url) as response:
                 if response.status == 200:
                     pass

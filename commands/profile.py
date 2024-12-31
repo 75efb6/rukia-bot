@@ -25,7 +25,7 @@ class Profile(commands.Cog):
             user_id = uid
         ## Calling API for user info
         async with aiohttp.ClientSession() as session:
-            api_url = f'http://{config.domain}/api/get_user?id={user_id}'
+            api_url = f'{config.domain}/api/get_user?id={user_id}'
             async with session.get(api_url) as response:
                 if response.status == 200:
                     data = await response.json()

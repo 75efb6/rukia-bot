@@ -25,7 +25,7 @@ class Recent(commands.Cog):
             user_id = uid
         ## Calling API for user info
         async with aiohttp.ClientSession() as session:
-            api_url = f'http://{config.domain}/api/recent?id={user_id}&index={index}'
+            api_url = f'{config.domain}/api/recent?id={user_id}&index={index}'
             async with session.get(api_url) as response:
                 if response.status == 200:
                     data = await response.json()
