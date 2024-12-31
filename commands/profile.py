@@ -12,13 +12,15 @@ class Profile(commands.Cog):
 
     @nextcord.slash_command(name="profile", description="Responds with the info of the specified user.")
     async def _profile(self, interaction: nextcord.Interaction, uid: Optional[int] = SlashOption(required=False)):
-        if uid == False:
-            d_id= str(interaction.user.id)
+        if uid == None:
+            d_id = str(interaction.user.id)
             u_data = mongodb_handler.get_profile(d_id)
-            uid = u_data.get("$uid", "N/A")
+            user_id = u_data.get("uid", "22")
+        else:
+            user_id = uid
         ## Calling API for user info
         async with aiohttp.ClientSession() as session:
-            api_url = f'http://{config.domain}/api/get_user?id={uid}'
+            api_url = f'http://{config.domain}/api/get_user?id={user_id}'
             async with session.get(api_url) as response:
                 if response.status == 200:
                     data = await response.json()
@@ -31,7 +33,7 @@ class Profile(commands.Cog):
                     pc = stats.get('plays', 'N/A')
 
                     embed = nextcord.Embed(title=f"User Profile for user: {user_name}", description=f"**Global Rank: #{rank}**", color=0x00ff00)
-                    embed.set_thumbnail(url=f"http://{config.domain}/user/avatar/{uid}.png")
+                    embed.set_thumbnail(url=f"http://{config.domain}/user/avatar/{user_id}.png")
                     embed.add_field(name="Accuracy:", value=f"{round(acc, 2)}%", inline=False)
                     embed.add_field(name="Performance Points:", value=f"{pp}pp", inline=False)
                     embed.add_field(name="Playcount:", value=f"{pc} plays")
