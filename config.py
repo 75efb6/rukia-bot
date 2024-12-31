@@ -17,7 +17,7 @@ wl_key = getenv("WL_KEY", "")
 wl_roleid = getenv("WL_ROLE", "")
 
 ## Your private server domain (or ip)
-domain = "45.153.70.170"
+domain = "example.com"
 
 ## Your discord server guild id
 guild_id = 1234567890
