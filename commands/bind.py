@@ -17,6 +17,7 @@ class Bind(commands.Cog):
     async def _bind(self, interaction: nextcord.Interaction, username:str = nextcord.SlashOption(required=True, description="Your username used to log into the game."), password:str = nextcord.SlashOption(required=True, description="Password used to log into the game.")):
         await interaction.response.defer(ephemeral=True)
         user_id = str(interaction.user.id)
+        d_uname = interaction.user.display_name
 
         async with aiohttp.ClientSession() as session:
             api_url = f"{config.domain}/api/login.php"
@@ -51,7 +52,7 @@ class Bind(commands.Cog):
                         if already_bound and already_bound["_id"] == user_id:
                             await interaction.followup.send("You can't rebind your account, tell Owner for unbind.", ephemeral=True)
                             return
-                        mongodb_handler.bind_profile(user_id, uid)
+                        mongodb_handler.bind_profile(user_id, uid, d_uname, username)
                         await interaction.followup.send(f"User account {username} has been bound successfully!", ephemeral=True)
                     else:
                         print(response + " Failed 1")
