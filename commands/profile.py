@@ -19,7 +19,7 @@ class Profile(commands.Cog):
             u_data = mongodb_handler.get_profile(d_id)
             try:
                 user_id = u_data.get("uid")
-            except:
+            except Exception:
                 await interaction.followup.send("You didn't specify an UID, and you don't have any account binded.")
                 return
         else:

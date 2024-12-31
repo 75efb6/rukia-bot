@@ -7,7 +7,7 @@ import hashlib
 
 def get_md5_hash(input_string):
     ## Compute MD5 hash
-    return hashlib.md5(input_string.encode("utf-8")).hexdigest()
+    return hashlib.md5(input_string.encode("utf-8")).hexdigest() # nosec
 
 class Bind(commands.Cog):
     def __init__(self, bot):

@@ -19,7 +19,7 @@ class Recent(commands.Cog):
             u_data = mongodb_handler.get_profile(d_id)
             try:
                 user_id = u_data.get("uid")
-            except:
+            except Exception:
                 await interaction.followup.send("You didn't specify an UID, and you don't have any account binded.")
                 return
         else:
@@ -31,7 +31,7 @@ class Recent(commands.Cog):
                 if response.status == 200:
                     try:
                         data = await response.json()
-                    except:
+                    except Exception:
                         await interaction.followup.send("Response is invalid, it may be empty, if account is new, ignore this error.")
                         return
                     ## Parsing the data
