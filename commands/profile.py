@@ -43,10 +43,10 @@ class Profile(commands.Cog):
                     embed.add_field(name="Performance Points:", value=f"{pp}pp", inline=False)
                     embed.add_field(name="Playcount:", value=f"{pc} plays")
                     
-                    await interaction.response.send_message(embed=embed)
+                    await interaction.followup.send(embed=embed)
 
                 else:
-                    await interaction.response.send_message("Couldn't fetch the data.")
+                    await interaction.followup.send("Couldn't fetch the data.")
 
 def setup(bot):
     if bot.get_cog("profile") is None:

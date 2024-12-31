@@ -41,7 +41,7 @@ class WhitelistAdd(commands.Cog):
 
                     await interaction.followup.send("Done.")
                 else:
-                    await interaction.response.send_message("Failed to fetch IDs from the first API.")
+                    await interaction.followup.send("Failed to fetch IDs from the first API.")
 
 def setup(bot):
     if bot.get_cog("WhitelistAdd") is None:
