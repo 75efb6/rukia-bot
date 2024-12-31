@@ -1,19 +1,45 @@
-# Rukia Bot
+<h1 align="center">Rukia Bot</h1>
 
-[![CodeFactor](https://www.codefactor.io/repository/github/75efb6/rukia-bot/badge)](https://www.codefactor.io/repository/github/75efb6/rukia-bot)
+<p align="center">
+  <a href="https://www.codefactor.io/repository/github/75efb6/rukia-bot">
+    <img src="https://www.codefactor.io/repository/github/75efb6/rukia-bot/badge" alt="CodeFactor">
+  </a>
+</p>
 
-Bot in python for a private server for osu!droid (used with a server based of [this](https://github.com/unclem2/osudroid-rx-server) codebase)
+Rukia Bot is a Python-based bot designed for a private server for osu!droid, using a server based on [this codebase](https://github.com/unclem2/osudroid-rx-server).
 
-Dependencies
-------------
-- Latest python version
+## Dependencies
+
+Ensure you have the following dependencies installed:
+
+- Latest Python version
 - osu!v1 API key
 - Discord server
-- Nextcord python package
-- Dotenv python package
+- Nextcord Python package
+- Dotenv Python package
 
-Usage
------
-- Rename .env.example to .env and fill it out.
-- Change config.py stuff (the ones that arent using .env stuff)
-- Run main.py and enjoy!
+## Setup
+
+Follow these steps to get started with Rukia Bot:
+
+1. **Configure Environment Variables**
+   - Rename `.env.example` to `.env`.
+   - Fill out the required fields in the `.env` file.
+
+2. **Modify Configuration**
+   - Update the necessary fields in `config.py` (fields not covered by `.env`).
+
+3. **Run the Bot**
+   - Execute `main.py` to start the bot and enjoy!
+
+## Contributing
+
+If you would like to contribute to the development of Rukia Bot, feel free to fork the repository and submit a pull request. Contributions are always welcome!
+
+## License
+
+Rukia Bot is licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute this software in accordance with the license.
+
+## Acknowledgments
+
+- [unclem2](https://github.com/unclem2) for the osu!droid-rx-server codebase.
