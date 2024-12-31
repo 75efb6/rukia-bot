@@ -8,13 +8,19 @@
 
 Rukia Bot is a Python-based bot designed for a private server for osu!droid, using a server based on [this codebase](https://github.com/unclem2/osudroid-rx-server).
 
+## Required
+
+Ensure you have the following:
+
+- An osu!v1 API key
+- An existing server running
+- A Discord Server
+
 ## Dependencies
 
 Ensure you have the following dependencies installed:
 
 - Latest Python version
-- osu!v1 API key
-- Discord server
 - Nextcord Python package
 - Dotenv Python package
 
