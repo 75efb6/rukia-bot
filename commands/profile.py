@@ -13,7 +13,7 @@ class Profile(commands.Cog):
     @nextcord.slash_command(name="profile", description="Responds with the info of the specified user.")
     async def _profile(self, interaction: nextcord.Interaction, uid: Optional[int] = SlashOption(required=False, description="Numerical ID of the user you want.")):
         await interaction.response.defer()
-        if uid == None:
+        if uid is None:
             d_id = str(interaction.user.id)
             u_data = mongodb_handler.get_profile(d_id)
             try:
@@ -38,7 +38,7 @@ class Profile(commands.Cog):
                     pc = stats.get('plays', 'N/A')
 
                     embed = nextcord.Embed(title=f"User Profile for user: {user_name}", description=f"**Global Rank: #{rank}**", color=0x00ff00)
-                    embed.set_thumbnail(url=f"http://{config.domain}/user/avatar/{user_id}.png")
+                    embed.set_thumbnail(url=f"{config.domain}/user/avatar/{user_id}.png")
                     embed.add_field(name="Accuracy:", value=f"{round(acc, 2)}%", inline=False)
                     embed.add_field(name="Performance Points:", value=f"{pp}pp", inline=False)
                     embed.add_field(name="Playcount:", value=f"{pc} plays")

@@ -13,7 +13,7 @@ class Recent(commands.Cog):
     @nextcord.slash_command(name="recent", description="Responds with the recent play of the specified user.")
     async def _recent(self, interaction: nextcord.Interaction, uid: Optional[int] = SlashOption(required=False, description="Numerical ID of the user you want."), index: Optional[int] = SlashOption(required=False, default=1, description="Index of the play you want to get (Default = 1)")):
         await interaction.response.defer()
-        if uid == None:
+        if uid is None:
             d_id = str(interaction.user.id)
             u_data = mongodb_handler.get_profile(d_id)
             try:
@@ -28,7 +28,11 @@ class Recent(commands.Cog):
             api_url = f'{config.domain}/api/recent?id={user_id}&index={index}'
             async with session.get(api_url) as response:
                 if response.status == 200:
-                    data = await response.json()
+                    try:
+                        data = await response.json()
+                    except:
+                        await interaction.followup.send("Response is invalid, it may be empty, if account is new, ignore this error.")
+                        return
                     ## Parsing the data
                     if isinstance(data, list):
                             for item in data:
