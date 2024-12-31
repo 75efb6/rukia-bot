@@ -1,17 +1,21 @@
 import nextcord
 import config
 from nextcord.ext import commands
+from nextcord import SlashOption
 import aiohttp
+from typing import Optional
+from handlers.mongodb import mongodb_handler
 
 class Profile(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @nextcord.slash_command(name="profile", description="Responds with the info of the specified user.")
-    async def _profile(self, interaction: nextcord.Interaction, uid: str):
-        if not uid.isdigit(): 
-            await interaction.response.send_message("Please provide a valid numeric user ID.") 
-            return
+    async def _profile(self, interaction: nextcord.Interaction, uid: Optional[int] = SlashOption(required=False)):
+        if uid == False:
+            d_id= str(interaction.user.id)
+            u_data = mongodb_handler.get_profile(d_id)
+            uid = u_data.get("$uid", "N/A")
         ## Calling API for user info
         async with aiohttp.ClientSession() as session:
             api_url = f'http://{config.domain}/api/get_user?id={uid}'
