@@ -11,3 +11,9 @@ Dependencies
 - Discord server
 - Nextcord python package
 - Dotenv python package
+
+Usage
+-----
+- Rename .env.example to .env and fill it out.
+- Change config.py stuff (the ones that arent using .env stuff)
+- Run main.py and enjoy!
