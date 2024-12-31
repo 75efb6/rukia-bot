@@ -15,7 +15,7 @@ class Profile(commands.Cog):
         if uid == None:
             d_id = str(interaction.user.id)
             u_data = mongodb_handler.get_profile(d_id)
-            user_id = u_data.get("uid", "22")
+            user_id = u_data.get("uid", "N/A")
         else:
             user_id = uid
         ## Calling API for user info
