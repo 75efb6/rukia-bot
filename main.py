@@ -2,12 +2,8 @@ import nextcord
 from nextcord.ext import commands
 import os
 import config
-import asyncio
 
-intents = nextcord.Intents.default()
-intents.messages = True
-
-bot = commands.Bot(command_prefix='!', intents=intents)
+bot = commands.Bot()
 
 @bot.event
 async def on_ready():
