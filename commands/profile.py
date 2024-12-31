@@ -18,6 +18,8 @@ class Profile(commands.Cog):
             user_id = u_data.get("uid", "N/A")
         else:
             user_id = uid
+        if user_id == "N/A":
+            await interaction.response.send_message("You didn't specify an UID, and you don't have any account binded.")
         ## Calling API for user info
         async with aiohttp.ClientSession() as session:
             api_url = f'http://{config.domain}/api/get_user?id={user_id}'
