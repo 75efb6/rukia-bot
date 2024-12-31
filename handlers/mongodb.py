@@ -9,6 +9,7 @@ class MongoDB:
         self.client = MongoClient(os.getenv('DB'))
         self.db = self.client["bot_database"]
         self.collection = self.db["users"]
+        print("Connected to MongoDB.")
 
     def bind_profile(self, discord_id, user_id):
         update_data = {"$set": {"uid": user_id}}

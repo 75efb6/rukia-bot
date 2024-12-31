@@ -20,7 +20,6 @@ class WhitelistRemoveDiff(commands.Cog):
         if role not in interaction.user.roles:
             await interaction.response.send_message("You do not have the required role to use this command.", ephemeral=True)
             return
-        ## Defers the response to give us some time to make api calls and being able to send messages.
         await interaction.response.defer()
         
         async with aiohttp.ClientSession() as session:

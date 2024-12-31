@@ -6,7 +6,7 @@ import config
 import hashlib
 
 def get_md5_hash(input_string):
-    # Compute MD5 hash
+    ## Compute MD5 hash
     return hashlib.md5(input_string.encode("utf-8")).hexdigest()
 
 class Bind(commands.Cog):

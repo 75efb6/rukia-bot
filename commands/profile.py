@@ -13,6 +13,7 @@ class Profile(commands.Cog):
     @nextcord.slash_command(name="profile", description="Responds with the info of the specified user.")
     async def _profile(self, interaction: nextcord.Interaction, uid: Optional[int] = SlashOption(required=False, description="Numerical ID of the user you want.")):
         await interaction.response.defer()
+        ## Check if user has account binded and if user has specified an UID in the command options
         if uid is None:
             d_id = str(interaction.user.id)
             u_data = mongodb_handler.get_profile(d_id)
