@@ -6,11 +6,11 @@ import aiohttp
 from typing import Optional
 from handlers.mongodb import mongodb_handler
 from handlers.mods import Mods
+import config
 
 class Recent(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-
     @nextcord.slash_command(name="recent", description="Responds with the recent play of the specified user.")
     async def _recent(self, interaction: nextcord.Interaction, uid: Optional[int] = SlashOption(required=False, description="Numerical ID of the user you want."), index: Optional[int] = SlashOption(required=False, default=1, description="Index of the play you want to get (Default = 1)")):
         await interaction.response.defer()
