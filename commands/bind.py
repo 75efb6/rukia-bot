@@ -5,10 +5,6 @@ import aiohttp
 import config
 import hashlib
 
-def add_slashes(input_string):
-    # Add backslashes to escape characters like single and double quotes
-    return input_string.replace("'", "\\'").replace('"', '\\"')
-
 def get_md5_hash(input_string):
     # Compute MD5 hash
     return hashlib.md5(input_string.encode("utf-8")).hexdigest()
@@ -24,15 +20,16 @@ class Bind(commands.Cog):
 
         async with aiohttp.ClientSession() as session:
             api_url = f"{config.domain}/api/login.php"
-            gameversion = 3
-            salted_pswd = password + "taikotaiko"
-            pswd_hash = get_md5_hash(salted_pswd)
+            gameversion = 3 ## Game version specified in game server api
+            salted_pswd = password + "taikotaiko" ## Adding salt to password
+            pswd_hash = get_md5_hash(salted_pswd) ## Hashing password
             username = username.strip()
             params = {
-                "username": username,  # Strip any potential leading/trailing whitespace
+                "username": username,
                 "password": pswd_hash,
-                "version": str(gameversion)  # Make sure version is a string "3"
+                "version": str(gameversion)
             }
+            ## Requesting to API for verification process
             async with session.post(api_url, data=params) as response:
                 if response.status == 200:
                     response = await response.text()
@@ -43,8 +40,9 @@ class Bind(commands.Cog):
                             print(response + " Failed 2")
                             await interaction.followup.send("Invalid data sent from server.", ephemeral=True)
                             return
+                        ## Parsing User ID from API response
                         uid = int(data[0])
-                        # Check if the uid is already bound to another user
+                        ## Check if the uid is already bound to another user
                         existing_user = mongodb_handler.find_user_by_uid(uid)
                         if existing_user and existing_user["_id"] != user_id:
                             await interaction.followup.send("This UID is already bound to another account.", ephemeral=True)
