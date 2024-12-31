@@ -11,15 +11,18 @@ class Profile(commands.Cog):
         self.bot = bot
 
     @nextcord.slash_command(name="profile", description="Responds with the info of the specified user.")
-    async def _profile(self, interaction: nextcord.Interaction, uid: Optional[int] = SlashOption(required=False)):
+    async def _profile(self, interaction: nextcord.Interaction, uid: Optional[int] = SlashOption(required=False, description="Numerical ID of the user you want.")):
+        await interaction.response.defer()
         if uid == None:
             d_id = str(interaction.user.id)
             u_data = mongodb_handler.get_profile(d_id)
-            user_id = u_data.get("uid", "N/A")
+            try:
+                user_id = u_data.get("uid")
+            except:
+                await interaction.followup.send("You didn't specify an UID, and you don't have any account binded.")
+                return
         else:
             user_id = uid
-        if user_id == "N/A":
-            await interaction.response.send_message("You didn't specify an UID, and you don't have any account binded.")
         ## Calling API for user info
         async with aiohttp.ClientSession() as session:
             api_url = f'http://{config.domain}/api/get_user?id={user_id}'
