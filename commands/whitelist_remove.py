@@ -7,7 +7,7 @@ class WhitelistRemove(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @nextcord.slash_command(name="whitelist_remove", description="Command to remove beatmaps from the whitelist. (Limited to users with an specific role.)")
+    @nextcord.slash_command(name="whitelist_remove", description="Command to remove beatmaps from the whitelist.")
     async def _whitelist_add(self, interaction: nextcord.Interaction, setid:str):
         role_id = config.wl_roleid
         role = interaction.guild.get_role(role_id)

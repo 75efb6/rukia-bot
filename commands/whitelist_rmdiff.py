@@ -7,7 +7,7 @@ class WhitelistRemoveDiff(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @nextcord.slash_command(name="whitelist_rmdiff", description="Command to remove difficulties of a certain beatmap from the whitelist. (Limited to users with an specific role.)")
+    @nextcord.slash_command(name="whitelist_rmdiff", description="Command to remove difficulties of a certain beatmap from the whitelist.")
     async def _whitelist_add(self, interaction: nextcord.Interaction, diffid:str):
         ## Checking if role exists and user has role
         role_id = config.wl_roleid
