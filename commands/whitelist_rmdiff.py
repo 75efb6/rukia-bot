@@ -20,8 +20,9 @@ class WhitelistRemoveDiff(commands.Cog):
         if role not in interaction.user.roles:
             await interaction.response.send_message("You do not have the required role to use this command.", ephemeral=True)
             return
-        await interaction.response.defer()
         
+        await interaction.response.defer()
+
         async with aiohttp.ClientSession() as session:
             ## Calls the private server API
             api_url = f'{config.domain}/api/wl_remove?key={config.wl_key}&bid={diffid}'
