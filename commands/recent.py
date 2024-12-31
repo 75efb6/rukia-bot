@@ -6,7 +6,6 @@ import aiohttp
 from typing import Optional
 from handlers.mongodb import mongodb_handler
 from handlers.mods import Mods
-import config
 
 class Recent(commands.Cog):
     def __init__(self, bot):
