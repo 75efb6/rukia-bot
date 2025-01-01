@@ -28,9 +28,9 @@ class WhitelistRemoveDiff(commands.Cog):
             api_url = f'{config.domain}/api/wl_remove?key={config.wl_key}&bid={diffid}'
             async with session.get(api_url) as response:
                 if response.status == 200:
-                    pass
+                    interaction.followup.send("Done.")
                 else:
-                    await interaction.followup.send("Done.")
+                    await interaction.followup.send("Couldn't remove difficulty from whitelist.")
 
 def setup(bot):
     if bot.get_cog("WhitelistRemoveDiff") is None:
