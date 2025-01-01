@@ -56,7 +56,6 @@ class Bind(commands.Cog):
                         await interaction.followup.send(f"User account {username} has been bound successfully!", ephemeral=True)
                     else:
                         print(response + " Failed 1")
-                        print("1")
                         await interaction.followup.send("Invalid data sent from server.", ephemeral=True)
                         return
 
