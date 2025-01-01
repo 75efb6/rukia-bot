@@ -50,8 +50,6 @@ class Recent(commands.Cog):
                                 h100f = int(h100 + hkatsu)
                                 mods = Mods(item.get("mods", "N/A")).convert_std
                                 pp = item.get("pp", "N/A")
-                                rank = item.get("rank", "N/A")
-                                status = item.get("status", "N/A")
                                 maphash = item.get("maphash", "N/A")
                     
                     osuapi = f"https://osu.ppy.sh/api/get_beatmaps?k={config.osu_key}&h={maphash}"
