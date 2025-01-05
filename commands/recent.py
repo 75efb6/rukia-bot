@@ -36,21 +36,21 @@ class Recent(commands.Cog):
                         return
                     ## Parsing the data
                     if isinstance(data, list):
-                            for item in data:
-                                # Parsing the data
-                                acc = float(item.get("acc", "N/A"))
-                                combo = item.get("combo", "N/A")
-                                h100 = item.get("hit100", "N/A")
-                                h300 = item.get("hit300", "N/A")
-                                h50 = item.get("hit50", "N/A")
-                                hmiss = item.get("hitmiss", "N/A")
-                                hgeki = item.get("hitgeki", "N/A")
-                                hkatsu = item.get("hitkatsu", "N/A")
-                                h300f = int(h300 + hgeki)
-                                h100f = int(h100 + hkatsu)
-                                mods = Mods(item.get("mods", "N/A")).convert_std
-                                pp = item.get("pp", "N/A")
-                                maphash = item.get("maphash", "N/A")
+                            item = data[0]
+                            # Parsing the data
+                            acc = float(item.get("acc", "N/A"))
+                            combo = item.get("combo", "N/A")
+                            h100 = item.get("hit100", "N/A")
+                            h300 = item.get("hit300", "N/A")
+                            h50 = item.get("hit50", "N/A")
+                            hmiss = item.get("hitmiss", "N/A")
+                            hgeki = item.get("hitgeki", "N/A")
+                            hkatsu = item.get("hitkatsu", "N/A")
+                            h300f = int(h300 + hgeki)
+                            h100f = int(h100 + hkatsu)
+                            mods = Mods(item.get("mods", "N/A")).convert_std
+                            pp = item.get("pp", "N/A")
+                            maphash = item.get("maphash", "N/A")
                     
                     osuapi = f"https://osu.ppy.sh/api/get_beatmaps?k={config.osu_key}&h={maphash}"
                     async with session.get(osuapi) as response:
