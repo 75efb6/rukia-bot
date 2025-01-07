@@ -4,6 +4,9 @@
   <a href="https://www.codefactor.io/repository/github/75efb6/rukia-bot">
     <img src="https://www.codefactor.io/repository/github/75efb6/rukia-bot/badge" alt="CodeFactor">
   </a>
+  <a href="https://github.com/psf/black">
+    <img src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="Code style: black">
+  </a>
 </p>
 
 Rukia Bot is a Python-based bot designed for a private server for osu!droid, using a server based on [this codebase](https://github.com/unclem2/osudroid-rx-server).
