@@ -11,7 +11,9 @@ class Profile(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @nextcord.slash_command(name="profile", description="Responds with the info of the specified user.")
+    @nextcord.slash_command(
+        name="profile", description="Responds with the info of the specified user."
+    )
     async def _profile(
         self,
         interaction: nextcord.Interaction,
