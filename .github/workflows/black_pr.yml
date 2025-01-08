@@ -21,3 +21,6 @@ jobs:
           INPUT_FAIL_ON_ERROR: true
         with:
           tool_name: blackfmt
+      - name: Mark check as failed if formatted
+        if: steps.action_black.outputs.is_formatted == 'true'
+        run: exit 1
