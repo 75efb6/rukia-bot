@@ -11,7 +11,7 @@ discord_token = getenv("TOKEN", "")
 osu_key = getenv("OSU_KEY", "")
 
 ## Your WhiteList add and remove key
-wl_key = getenv("WL_KEY", "")
+wl_key = 1234567890
 
 ## Your discord server role id for whitelist moderation
 wl_roleid = getenv("WL_ROLE", "")
