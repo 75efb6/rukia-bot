@@ -44,7 +44,7 @@ class Recent(commands.Cog):
             user_id = uid
         ## Calling API for user info
         async with aiohttp.ClientSession() as session:
-            api_url = f"{config.domain}/api/recent?id={user_id}&index={index}"
+            api_url = f"{config.domain}/api/recent?id={user_id}&offset={index}"
             async with session.get(api_url) as response:
                 if response.status == 200:
                     try:
@@ -54,23 +54,20 @@ class Recent(commands.Cog):
                             "Response is invalid, it may be empty, if account is new, ignore this error."
                         )
                         return
-                    ## Parsing the data
-                    if isinstance(data, list):
-                        item = data[0]
-                        # Parsing the data
-                        acc = float(item.get("acc", "N/A"))
-                        combo = item.get("combo", "N/A")
-                        h100 = item.get("hit100", "N/A")
-                        h300 = item.get("hit300", "N/A")
-                        h50 = item.get("hit50", "N/A")
-                        hmiss = item.get("hitmiss", "N/A")
-                        hgeki = item.get("hitgeki", "N/A")
-                        hkatsu = item.get("hitkatsu", "N/A")
-                        h300f = int(h300 + hgeki)
-                        h100f = int(h100 + hkatsu)
-                        mods = Mods(item.get("mods", "N/A")).convert_std
-                        pp = item.get("pp", "N/A")
-                        maphash = item.get("maphash", "N/A")
+                    # Parsing the data
+                    acc = float(data.get("acc", "N/A"))
+                    combo = data.get("combo", "N/A")
+                    h100 = data.get("hit100", "N/A")
+                    h300 = data.get("hit300", "N/A")
+                    h50 = data.get("hit50", "N/A")
+                    hmiss = data.get("hitmiss", "N/A")
+                    hgeki = data.get("hitgeki", "N/A")
+                    hkatsu = data.get("hitkatsu", "N/A")
+                    h300f = int(h300 + hgeki)
+                    h100f = int(h100 + hkatsu)
+                    mods = Mods(data.get("mods", "N/A")).convert_std
+                    pp = data.get("pp", "N/A")
+                    maphash = data.get("maphash", "N/A")
 
                     osuapi = f"https://osu.ppy.sh/api/get_beatmaps?k={config.osu_key}&h={maphash}"
                     async with session.get(osuapi) as response:
