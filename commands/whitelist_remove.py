@@ -56,8 +56,8 @@ class WhitelistRemove(commands.Cog):
                                 pass
                             else:
                                 await interaction.followup.send(
-                        "Failed to remove maps from whitelist."
-                    )
+                                    "Failed to remove maps from whitelist."
+                                )
 
                     await interaction.followup.send("Done.")
                 else:
