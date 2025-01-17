@@ -48,8 +48,6 @@ class WhitelistAdd(commands.Cog):
                         item["beatmap_id"] for item in data if "beatmap_id" in item
                     ]
 
-                    ## Collect data from the second API for each ID
-                    collected_data = []
                     for beatmap_id in beatmap_ids:
                         ## Inserting maps into whitelist
                         second_api_url = f"{config.domain}/api/wl_add?key={config.wl_key}&bid={beatmap_id}"
@@ -57,8 +55,8 @@ class WhitelistAdd(commands.Cog):
                             if second_response.status == 200:
                                 pass
                             else:
-                                collected_data.append(
-                                    {"id": id, "error": "Failed to fetch details"}
+                                await interaction.followup.send(
+                                    "Failed inserting maps to whitelist."
                                 )
 
                     await interaction.followup.send("Done.")
