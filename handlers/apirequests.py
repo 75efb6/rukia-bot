@@ -48,7 +48,7 @@ class DroidAPI:
                     if len(data) < 6:
                         raise Exception("1")
                 else:
-                    raise Exception(2)
+                    raise Exception("2")
             else:
                 raise Exception(f"Response is not 200. status_code: {response.status_code}")
         except Exception as err:

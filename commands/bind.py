@@ -16,7 +16,7 @@ class Bind(commands.Cog):
         self.bot = bot
 
     @nextcord.slash_command(
-        name="bind", description="Bind your profile to your Discord account", guild_ids=[config.guild_id],
+        name="bind", description="Bind your profile to your Discord account",
     )
     async def _bind(
         self,

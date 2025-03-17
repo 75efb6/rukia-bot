@@ -17,7 +17,7 @@ class Requests:
             elif request_type == "POST":
                 if data is None:
                     raise Exception("Data must be sent while making a POST request.")
-                r = post(url=self.odrx_api + api_endpoint) if isDroid is True else get(url=self.osu_api + api_endpoint)
+                r = post(url=self.odrx_api + api_endpoint, data=data) if isDroid is True else get(url=self.osu_api + api_endpoint, data=data)
                 return r
         except Exception as err:
             print(f"Error ocurred while trying to make a request to an API (isDroid = {isDroid}, err: {err})")
