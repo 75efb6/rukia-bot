@@ -2,7 +2,6 @@ import nextcord
 from nextcord.ext import commands
 from handlers.mongodb import mongodb_handler
 from handlers.apirequests import DroidAPI
-import config
 import hashlib
 
 

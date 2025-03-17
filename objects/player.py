@@ -1,7 +1,4 @@
-import handlers.apirequests
 from handlers.mods import Mods
-from objects.mapdata import Map
-
 
 class Player:
     def __init__(self, data: dict):

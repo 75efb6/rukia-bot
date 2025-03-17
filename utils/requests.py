@@ -31,7 +31,7 @@ class Requests:
                 r = (
                     post(url=self.odrx_api + api_endpoint, data=data)
                     if isDroid is True
-                    else get(url=self.osu_api + api_endpoint, data=data)
+                    else post(url=self.osu_api + api_endpoint, data=data)
                 )
                 return r
         except Exception as err:

@@ -1,5 +1,4 @@
 import config
-from handlers.mods import Mods
 from utils.requests import Requests as r
 from objects.player import Player
 from objects.mapdata import Map
@@ -86,7 +85,7 @@ class DroidAPI:
 
     def wl_fromset(self, setid, isAdd=True):
         try:
-            beatmap_ids = OsuAPI.get_mapid_fromset(setid=setid)
+            beatmap_ids = OsuAPI().get_mapid_fromset(setid=setid)
             if beatmap_ids is not None:
                 for beatmap_id in beatmap_ids:
                     ## Inserting maps into whitelist
