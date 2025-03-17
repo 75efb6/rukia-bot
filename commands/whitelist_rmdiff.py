@@ -1,6 +1,6 @@
 import nextcord
 from nextcord.ext import commands
-import aiohttp
+from handlers.apirequests import DroidAPI
 import config
 
 
@@ -38,16 +38,12 @@ class WhitelistRemoveDiff(commands.Cog):
 
         await interaction.response.defer()
 
-        async with aiohttp.ClientSession() as session:
-            ## Calls the private server API
-            api_url = f"{config.domain}/api/wl_remove?key={config.wl_key}&bid={diffid}"
-            async with session.get(api_url) as response:
-                if response.status == 200:
-                    interaction.followup.send("Done.")
-                else:
-                    await interaction.followup.send(
-                        "Couldn't remove difficulty from whitelist."
-                    )
+        if DroidAPI().wl_fromid(mapid=diffid, isAdd=False) is not None:
+            await interaction.followup.send("Done.")
+        else:
+            await interaction.followup.send(
+                "Failed to fetch IDs from the first API."
+            )
 
 
 def setup(bot):

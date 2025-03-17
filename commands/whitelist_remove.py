@@ -1,6 +1,6 @@
 import nextcord
 from nextcord.ext import commands
-import aiohttp
+from handlers.apirequests import DroidAPI
 import config
 
 
@@ -37,33 +37,12 @@ class WhitelistRemove(commands.Cog):
 
         await interaction.response.defer()
         ## Requesting map id for each mapset using osu.ppy v1 API
-        async with aiohttp.ClientSession() as session:
-            api_url = (
-                f"https://osu.ppy.sh/api/get_beatmaps?k={config.osu_key}&s={setid}"
+        if DroidAPI().wl_fromset(setid=setid, isAdd=False) is not None:
+            await interaction.followup.send("Done.")
+        else:
+            await interaction.followup.send(
+                "Failed to fetch IDs from the first API."
             )
-            async with session.get(api_url) as response:
-                if response.status == 200:
-                    data = await response.json()
-                    beatmap_ids = [
-                        item["beatmap_id"] for item in data if "beatmap_id" in item
-                    ]
-
-                    for beatmap_id in beatmap_ids:
-                        ## Inserting maps into whitelist
-                        second_api_url = f"{config.domain}/api/wl_remove?key={config.wl_key}&bid={beatmap_id}"
-                        async with session.get(second_api_url) as second_response:
-                            if second_response.status == 200:
-                                pass
-                            else:
-                                await interaction.followup.send(
-                                    "Failed to remove maps from whitelist."
-                                )
-
-                    await interaction.followup.send("Done.")
-                else:
-                    await interaction.followup.send(
-                        "Failed to fetch IDs from the first API."
-                    )
 
 
 def setup(bot):

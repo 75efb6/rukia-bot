@@ -1,10 +1,10 @@
 import nextcord
-import config
 from nextcord.ext import commands
 from nextcord import SlashOption
-import aiohttp
 from typing import Optional
 from handlers.mongodb import mongodb_handler
+from handlers.apirequests import DroidAPI
+import config
 
 
 class Profile(commands.Cog):
@@ -36,39 +36,27 @@ class Profile(commands.Cog):
         else:
             user_id = uid
         ## Calling API for user info
-        async with aiohttp.ClientSession() as session:
-            api_url = f"{config.domain}/api/get_user?id={user_id}"
-            async with session.get(api_url) as response:
-                if response.status == 200:
-                    data = await response.json()
-                    ## Parsing the data
-                    user_name = data.get("name", "N/A")
-                    stats = data.get("stats", "N/A")
-                    rank = stats.get("rank", "N/A")
-                    pp = stats.get("pp", "N/A")
-                    acc = stats.get("accuracy", "N/A")
-                    pc = stats.get("plays", "N/A")
+        profile = DroidAPI().get_profile(uid=user_id)
+        if profile is not None:
+            embed = nextcord.Embed(
+                title=f"User Profile for user: {profile.user_name}",
+                description=f"**Global Rank: #{profile.rank}**",
+                color=0x00FF00,
+            )
+            embed.set_thumbnail(
+                url=f"{config.domain}/user/avatar/{user_id}.png"
+            )
+            embed.add_field(
+                name="Accuracy:", value=f"{round(profile.acc, 2)}%", inline=False
+            )
+            embed.add_field(
+                name="Performance Points:", value=f"{profile.pp}pp", inline=False
+            )
+            embed.add_field(name="Playcount:", value=f"{profile.pc} plays")
+            await interaction.followup.send(embed=embed)
 
-                    embed = nextcord.Embed(
-                        title=f"User Profile for user: {user_name}",
-                        description=f"**Global Rank: #{rank}**",
-                        color=0x00FF00,
-                    )
-                    embed.set_thumbnail(
-                        url=f"{config.domain}/user/avatar/{user_id}.png"
-                    )
-                    embed.add_field(
-                        name="Accuracy:", value=f"{round(acc, 2)}%", inline=False
-                    )
-                    embed.add_field(
-                        name="Performance Points:", value=f"{pp}pp", inline=False
-                    )
-                    embed.add_field(name="Playcount:", value=f"{pc} plays")
-
-                    await interaction.followup.send(embed=embed)
-
-                else:
-                    await interaction.followup.send("Couldn't fetch the data.")
+        else:
+            await interaction.followup.send("Couldn't fetch the data.")
 
 
 def setup(bot):

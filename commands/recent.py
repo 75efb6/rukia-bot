@@ -1,11 +1,9 @@
 import nextcord
-import config
 from nextcord.ext import commands
 from nextcord import SlashOption
-import aiohttp
 from typing import Optional
 from handlers.mongodb import mongodb_handler
-from handlers.mods import Mods
+from handlers.apirequests import DroidAPI, OsuAPI
 
 
 class Recent(commands.Cog):
@@ -43,77 +41,34 @@ class Recent(commands.Cog):
         else:
             user_id = uid
         ## Calling API for user info
-        async with aiohttp.ClientSession() as session:
-            api_url = f"{config.domain}/api/recent?id={user_id}&offset={index}"
-            async with session.get(api_url) as response:
-                if response.status == 200:
-                    try:
-                        data = await response.json()
-                    except Exception:
-                        await interaction.followup.send(
-                            "Response is invalid, it may be empty, if account is new, ignore this error."
-                        )
-                        return
-                    # Parsing the data
-                    acc = float(data.get("acc", "N/A"))
-                    combo = data.get("combo", "N/A")
-                    h100 = data.get("hit100", "N/A")
-                    h300 = data.get("hit300", "N/A")
-                    h50 = data.get("hit50", "N/A")
-                    hmiss = data.get("hitmiss", "N/A")
-                    hgeki = data.get("hitgeki", "N/A")
-                    hkatsu = data.get("hitkatsu", "N/A")
-                    h300f = int(h300 + hgeki)
-                    h100f = int(h100 + hkatsu)
-                    mods = Mods(data.get("mods", "N/A")).convert_std
-                    pp = data.get("pp", "N/A")
-                    maphash = data.get("maphash", "N/A")
-
-                    osuapi = f"https://osu.ppy.sh/api/get_beatmaps?k={config.osu_key}&h={maphash}"
-                    async with session.get(osuapi) as response:
-                        if response.status == 200:
-                            data = await response.json()
-                            ## Parsing map data
-                            if isinstance(data, list):
-                                for item in data:
-                                    artist = item.get("artist", "N/A")
-                                    title = item.get("title", "N/A")
-                                    version = item.get("version", "N/A")
-                                    max_combo = item.get("max_combo")
-                                    sr = float(item.get("difficultyrating"))
-                                    setid = item.get("beatmapset_id")
-                                    diffid = item.get("beatmap_id")
-
-                            ## Sending the embed
-                            embed = nextcord.Embed(
-                                title=f"☆ {round(sr, 2)} {artist} - {title} [{version}] +{mods}",
-                                url=f"https://osu.ppy.sh/beatmapsets/{setid}#osu/{diffid}",
-                                color=0x00FF00,
-                            )
-                            embed.set_thumbnail(
-                                url=f"https://b.ppy.sh/thumb/{setid}l.jpg"
-                            )
-                            embed.add_field(name="PP:", value=f"{round(pp)}pp")
-                            embed.add_field(name="Acc:", value=f"{round(acc, 2)}%")
-                            embed.add_field(
-                                name="Combo:", value=f"{combo}/{max_combo}x"
-                            )
-                            embed.add_field(
-                                name="Judgements:",
-                                value=f"300: {h300f}x | 100: {h100f}x | 50: {h50}x | X: {hmiss}x",
-                                inline=True,
-                            )
-                            await interaction.followup.send(
-                                embed=embed,
-                                content=f"Recent play for UID: {user_id} (Index: {index})",
-                            )
-                        else:
-                            await interaction.followup.send(
-                                "Couldn't fetch map data, maybe map isn't submitted on osu! website"
-                            )
-                else:
-                    await interaction.followup.send("Couldn't fetch the data.")
-
+        recent = DroidAPI().get_recent(uid=user_id, index=index)
+        m = OsuAPI().get_mapdata_fromhash(hash=recent.maphash)
+        if recent is not None:
+            ## Sending the embed
+            embed = nextcord.Embed(
+                title=f"☆ {round(m.sr, 2)} {m.artist} - {m.title} [{m.version}] +{recent.mods}",
+                url=f"https://osu.ppy.sh/beatmapsets/{m.setid}#osu/{m.diffid}",
+                color=0x00FF00,
+            )
+            embed.set_thumbnail(
+                url=f"https://b.ppy.sh/thumb/{m.setid}l.jpg"
+            )
+            embed.add_field(name="PP:", value=f"{round(recent.pp)}pp")
+            embed.add_field(name="Acc:", value=f"{round(recent.acc, 2)}%")
+            embed.add_field(
+                name="Combo:", value=f"{recent.combo}/{m.max_combo}x"
+            )
+            embed.add_field(
+                name="Judgements:",
+                value=f"300: {recent.h300}x | 100: {recent.h100}x | 50: {recent.h50}x | X: {recent.hmiss}x",
+                inline=True,
+            )
+            await interaction.followup.send(
+                embed=embed,
+                content=f"Recent play for UID: {user_id} (Index: {index})",
+            )
+        else:
+            await interaction.followup.send("Couldn't fetch map data, maybe map isn't submitted on osu! website")
 
 def setup(bot):
     if bot.get_cog("recent") is None:
