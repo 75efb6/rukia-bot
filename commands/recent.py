@@ -50,14 +50,10 @@ class Recent(commands.Cog):
                 url=f"https://osu.ppy.sh/beatmapsets/{m.setid}#osu/{m.diffid}",
                 color=0x00FF00,
             )
-            embed.set_thumbnail(
-                url=f"https://b.ppy.sh/thumb/{m.setid}l.jpg"
-            )
+            embed.set_thumbnail(url=f"https://b.ppy.sh/thumb/{m.setid}l.jpg")
             embed.add_field(name="PP:", value=f"{round(recent.pp)}pp")
             embed.add_field(name="Acc:", value=f"{round(recent.acc, 2)}%")
-            embed.add_field(
-                name="Combo:", value=f"{recent.combo}/{m.max_combo}x"
-            )
+            embed.add_field(name="Combo:", value=f"{recent.combo}/{m.max_combo}x")
             embed.add_field(
                 name="Judgements:",
                 value=f"300: {recent.h300}x | 100: {recent.h100}x | 50: {recent.h50}x | X: {recent.hmiss}x",
@@ -68,7 +64,10 @@ class Recent(commands.Cog):
                 content=f"Recent play for UID: {user_id} (Index: {index})",
             )
         else:
-            await interaction.followup.send("Couldn't fetch map data, maybe map isn't submitted on osu! website")
+            await interaction.followup.send(
+                "Couldn't fetch map data, maybe map isn't submitted on osu! website"
+            )
+
 
 def setup(bot):
     if bot.get_cog("recent") is None:
