@@ -86,7 +86,7 @@ class DroidAPI:
 
     def wl_fromset(self, setid, isAdd=True):
         try:
-            beatmap_ids = OsuAPI.get_mapid_fromset(setid)
+            beatmap_ids = OsuAPI.get_mapid_fromset(setid=setid)
             if beatmap_ids is not None:
                 for beatmap_id in beatmap_ids:
                     ## Inserting maps into whitelist
