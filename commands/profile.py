@@ -43,9 +43,7 @@ class Profile(commands.Cog):
                 description=f"**Global Rank: #{profile.rank}**",
                 color=0x00FF00,
             )
-            embed.set_thumbnail(
-                url=f"{config.domain}/user/avatar/{user_id}.png"
-            )
+            embed.set_thumbnail(url=f"{config.domain}/user/avatar/{user_id}.png")
             embed.add_field(
                 name="Accuracy:", value=f"{round(profile.acc, 2)}%", inline=False
             )

@@ -1,6 +1,8 @@
 import handlers.apirequests
 from handlers.mods import Mods
 from objects.mapdata import Map
+
+
 class Player:
     def __init__(self, data: dict):
         self.data = data
@@ -20,22 +22,22 @@ class Player:
         self.mods: str = ""
         self.pp: float = ""
         self.maphash: int = 0
-    
+
     @property
     def parse_profile(self):
         p = self
         try:
-            p.user_name = self.data.get('name')
-            stats = self.data.get('stats')
-            p.rank = stats.get('rank')
-            p.pp = stats.get('pp')
-            p.acc = stats.get('accuracy')
-            p.pc = stats.get('plays')
+            p.user_name = self.data.get("name")
+            stats = self.data.get("stats")
+            p.rank = stats.get("rank")
+            p.pp = stats.get("pp")
+            p.acc = stats.get("accuracy")
+            p.pc = stats.get("plays")
             return p
         except Exception as err:
             print(f"Error occured while parsing profile data: {err}")
             return None
-    
+
     @property
     def parse_recent(self):
         rp = self

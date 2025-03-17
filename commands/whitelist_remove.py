@@ -40,9 +40,7 @@ class WhitelistRemove(commands.Cog):
         if DroidAPI().wl_fromset(setid=setid, isAdd=False) is not None:
             await interaction.followup.send("Done.")
         else:
-            await interaction.followup.send(
-                "Failed to fetch IDs from the first API."
-            )
+            await interaction.followup.send("Failed to fetch IDs from the first API.")
 
 
 def setup(bot):

@@ -16,7 +16,8 @@ class Bind(commands.Cog):
         self.bot = bot
 
     @nextcord.slash_command(
-        name="bind", description="Bind your profile to your Discord account",
+        name="bind",
+        description="Bind your profile to your Discord account",
     )
     async def _bind(
         self,
@@ -54,10 +55,9 @@ class Bind(commands.Cog):
                 ephemeral=True,
             )
         else:
-            await interaction.followup.send(
-                "Invalid login", ephemeral=True
-            )
-            
+            await interaction.followup.send("Invalid login", ephemeral=True)
+
+
 def setup(bot):
     if bot.get_cog("Bind") is None:
         bot.add_cog(Bind(bot))
