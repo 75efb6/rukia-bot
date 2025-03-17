@@ -1,5 +1,6 @@
 from handlers.mods import Mods
 
+
 class Player:
     def __init__(self, data: dict):
         self.data = data
