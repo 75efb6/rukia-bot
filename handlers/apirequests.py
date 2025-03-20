@@ -91,8 +91,7 @@ class DroidAPI:
                     ## Inserting maps into whitelist
                     api_url = (
                         f"/wl_add?key={self.wl_key}&bid={beatmap_id}"
-                        if isAdd is True
-                        else api_url = f"/wl_rm?key={self.wl_key}&bid={beatmap_id}"
+                        if isAdd is True else f"/wl_rm?key={self.wl_key}&bid={beatmap_id}"
                     )
                     response = r().do(
                         isDroid=True, request_type="GET", api_endpoint=api_url
