@@ -119,7 +119,8 @@ class DroidAPI:
         try:
             api_url = (
                 f"/wl_add?key={self.wl_key}&bid={mapid}"
-                if isAdd is True else f"/wl_rm?key={self.wl_key}&bid={mapid}"
+                if isAdd is True
+                else f"/wl_rm?key={self.wl_key}&bid={mapid}"
             )
             response = r().do(isDroid=True, request_type="GET", api_endpoint=api_url)
             if response.status_code == 200:
