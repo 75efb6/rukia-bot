@@ -45,7 +45,6 @@ class Profile(commands.Cog):
             embed.set_thumbnail(url=f"{config.domain}/user/avatar/{user_id}.png")
             embed.set_author(icon_url=f"https://flagcdn.com/w20/{str(profile.country).lower()}.png", name=profile.user_name, url=f"{config.domain}/user/profile.php?id={user_id}")
             await interaction.followup.send(embed=embed)
-
         else:
             await interaction.followup.send("Couldn't fetch the data.")
 
