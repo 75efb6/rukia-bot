@@ -10,6 +10,7 @@ class Player:
         self.pp: float = 0.0
         self.acc: float = 0.0
         self.pc: int = 0
+        self.country: str = ""
         ## Recent
         self.acc: float = 0.0
         self.combo: int = 0
@@ -31,6 +32,7 @@ class Player:
             p.pp = stats.get("pp")
             p.acc = stats.get("accuracy")
             p.pc = stats.get("plays")
+            p.country = self.data.get("country")
             return p
         except Exception as err:
             print(f"Error occured while parsing profile data: {err}")

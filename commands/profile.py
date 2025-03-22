@@ -39,18 +39,11 @@ class Profile(commands.Cog):
         profile = DroidAPI().get_profile(uid=user_id)
         if profile is not None:
             embed = nextcord.Embed(
-                title=f"User Profile for user: {profile.user_name}",
-                description=f"**Global Rank: #{profile.rank}**",
+                description=f"**▸ Global Rank: #{profile.rank}**\n**▸ PP:** {profile.pp} **Accuracy:** {round(profile.acc, 2)}%\n**▸ Playcount:** {profile.pc}",
                 color=0x00FF00,
             )
             embed.set_thumbnail(url=f"{config.domain}/user/avatar/{user_id}.png")
-            embed.add_field(
-                name="Accuracy:", value=f"{round(profile.acc, 2)}%", inline=False
-            )
-            embed.add_field(
-                name="Performance Points:", value=f"{profile.pp}pp", inline=False
-            )
-            embed.add_field(name="Playcount:", value=f"{profile.pc} plays")
+            embed.set_author(icon_url=f"https://flagcdn.com/w20/{str(profile.country).lower()}.png", name=profile.user_name, url=f"{config.domain}/user/profile.php?id={user_id}")
             await interaction.followup.send(embed=embed)
 
         else:
