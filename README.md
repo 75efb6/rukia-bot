@@ -33,6 +33,7 @@ Follow these steps to get started with Rukia Bot:
 
 2. **Modify Configuration**
    - Update the necessary fields in `config.py` (fields not covered by `.env`).
+   - Update emojis on player object for rank emojis.
 
 3. **Run the Bot**
    - Execute `main.py` to start the bot and enjoy!
