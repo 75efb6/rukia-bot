@@ -159,6 +159,7 @@ class DroidAPI:
             print(f"Error: {err}")
             return None
 
+
 class OsuAPI:
     def __init__(self):
         self.apikey = config.osu_key
