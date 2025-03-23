@@ -131,7 +131,33 @@ class DroidAPI:
                 raise Exception(f"Could not add/remove map from wl. (mapid= {mapid})")
         except Exception as err:
             print(f"Error occured while adding/removing maps to whitelist: {err}")
+            return None
 
+    def get_status(self, hash):
+        try:
+            api_url = f"/v2/md5/{hash}"
+            response = r().do(isDroid=True, request_type="GET", api_endpoint=api_url)
+            if response.status_code == 200:
+                data = response.json()
+                unranked = "https://files.catbox.moe/m0erx1.png"
+                ranked = "https://files.catbox.moe/l8ljgc.png"
+                qualified = "https://files.catbox.moe/k6j7bg.png"
+                loved = "https://files.catbox.moe/6sdyhr.png"
+                status = {
+                    "-2": unranked,
+                    "-1": unranked,
+                    "0": unranked,
+                    "1": ranked,
+                    "2": qualified,
+                    "3": qualified,
+                    "4": loved,
+                }
+                return status.get(str(data.get("ranked")))
+            else:
+                raise Exception(response.status_code)
+        except Exception as err:
+            print(f"Error: {err}")
+            return None
 
 class OsuAPI:
     def __init__(self):

@@ -43,13 +43,14 @@ class Recent(commands.Cog):
         ## Calling API for user info
         recent = DroidAPI().get_recent(uid=user_id, index=index)
         m = OsuAPI().get_mapdata_fromhash(hash=recent.maphash)
-        if recent is not None:
+        status = DroidAPI().get_status(hash=recent.maphash)
+        if recent and m is not None:
             ## Sending the embed
             embed = nextcord.Embed(
                 description=f"▸ {recent.rank} ▸ {round(recent.pp, 2)}pp ▸ {round(recent.acc, 2)}%\n▸ {recent.score} ▸ x{recent.combo}/{m.max_combo}\n▸ 300: {recent.h300}x | 100: {recent.h100}x | 50: {recent.h50}x | X: {recent.hmiss}x",
                 color=0x00FF00,
             )
-            embed.set_author(icon_url=recent.status, name=f"☆ {round(m.sr, 2)} {m.artist} - {m.title} [{m.version}] +{recent.mods}", url=f"https://osu.ppy.sh/beatmapsets/{m.setid}#osu/{m.diffid}")
+            embed.set_author(icon_url=status, name=f"☆ {round(m.sr, 2)} {m.artist} - {m.title} [{m.version}] +{recent.mods}", url=f"https://osu.ppy.sh/beatmapsets/{m.setid}#osu/{m.diffid}")
             embed.set_thumbnail(url=f"https://b.ppy.sh/thumb/{m.setid}l.jpg")
             await interaction.followup.send(
                 embed=embed,
