@@ -45,7 +45,9 @@ class Recent(commands.Cog):
         if recent is not None:
             m = OsuAPI().get_mapdata_fromhash(hash=recent.maphash)
             if m is None:
-                return await interaction.followup.send("Map doesn't exist on osu.ppy.sh")
+                return await interaction.followup.send(
+                    "Map doesn't exist on osu.ppy.sh"
+                )
             status = DroidAPI().get_status(hash=recent.maphash)
             ## Sending the embed
             embed = nextcord.Embed(
