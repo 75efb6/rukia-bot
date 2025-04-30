@@ -63,9 +63,7 @@ class Recent(commands.Cog):
                 content=f"Recent play for UID: {user_id} (Index: {index})",
             )
         else:
-            await interaction.followup.send(
-                "Couldn't fetch recent data."
-            )
+            await interaction.followup.send("Couldn't fetch recent data.")
 
 
 def setup(bot):
