@@ -42,9 +42,13 @@ class Recent(commands.Cog):
             user_id = uid
         ## Calling API for user info
         recent = DroidAPI().get_recent(uid=user_id, index=index)
-        m = OsuAPI().get_mapdata_fromhash(hash=recent.maphash)
-        status = DroidAPI().get_status(hash=recent.maphash)
-        if recent and m is not None:
+        if recent is not None:
+            m = OsuAPI().get_mapdata_fromhash(hash=recent.maphash)
+            if m is None:
+                return await interaction.followup.send(
+                    "Map doesn't exist on osu.ppy.sh"
+                )
+            status = DroidAPI().get_status(hash=recent.maphash)
             ## Sending the embed
             embed = nextcord.Embed(
                 description=f"▸ {recent.rank} ▸ {round(recent.pp, 2)}pp ▸ {round(recent.acc, 2)}%\n▸ {recent.score} ▸ x{recent.combo}/{m.max_combo}\n▸ 300: {recent.h300}x | 100: {recent.h100}x | 50: {recent.h50}x | X: {recent.hmiss}x",
@@ -61,9 +65,7 @@ class Recent(commands.Cog):
                 content=f"Recent play for UID: {user_id} (Index: {index})",
             )
         else:
-            await interaction.followup.send(
-                "Couldn't fetch map data, maybe map isn't submitted on osu! website"
-            )
+            await interaction.followup.send("Couldn't fetch recent data.")
 
 
 def setup(bot):
