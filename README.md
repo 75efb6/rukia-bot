@@ -1,3 +1,5 @@
+<div align="center">Bot is now deprecated, does not work with latest server</div>
+
 <h1 align="center">Rukia Bot</h1>
 
 <p align="center">
